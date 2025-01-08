@@ -1,0 +1,35 @@
+
+  // const handleEditBanner = (banner) => {
+  //   setSelectedBanner(banner);
+  //   setBannerImages(banner.content.match(/<img src='(.*?)'/g).map((img) => img.replace(/<img src='|'/g, '')));
+  //   setBannerLinks(banner.content.match(/<a href='(.*?)'/g).map((link) => link.replace(/<a href='|'/g, '')));
+  //   setIsEditingBanner(true);
+  // };
+
+  // const handleSaveBanner = () => {
+  //   setData((prevData) => {
+  //     const updatedDepartments = prevData.departments.map((dept) => {
+  //       return {
+  //         ...dept,
+  //         sections: dept.sections.map((section) => {
+  //           return {
+  //             ...section,
+  //             banner: section.banner.map((banner) => {
+  //               if (banner.bannerid === selectedBanner.bannerid) {
+  //                 const contentTemplate = generateBannerTemplate(bannerType, bannerImages, bannerLinks);
+  //                 return {
+  //                   ...banner,
+  //                   content: contentTemplate,
+  //                 };
+  //               }
+  //               return banner;
+  //             }),
+  //           };
+  //         }),
+  //       };
+  //     });
+  //     return { departments: updatedDepartments };
+  //   });
+  //   setIsEditingBanner(false);
+  //   setSelectedBanner(null);
+  // };

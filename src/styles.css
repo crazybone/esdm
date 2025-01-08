@@ -1,0 +1,6 @@
+.MuiAccordion-root.Mui-expanded {
+    background-color: #eef6fb;
+}
+.MuiAccordion-region .MuiAccordionDetails-root .Mui-expanded {
+    background-color: #f6fafd;
+}
