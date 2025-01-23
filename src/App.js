@@ -42,7 +42,7 @@ function App() {
     content: ''
   });
   const [departmentsField, setDepartmentsField] = useState([]);
-  const [templatesBanner, setTemplatesBanner] = useState([]);
+  const [templatesBanner, setTemplatesBanner] = useState(['']);
 
   const getData=()=>{
     fetch('db.json',
@@ -65,13 +65,18 @@ function App() {
 
   useEffect(() => {
     getData();
-    handleGetTemplates();
+    setTemplatesBanner(handleGetTemplates);
   }, []);
 
   const handleGetTemplates = () => {    
-    const getTemplate = data.templates
+    const getTemplate = [
+      "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td>",
+      "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link2><img src=@img2 alt='Banner Image' /></a></div></td>",
+      "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link2><img src=@img2 alt='Banner Image' /></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link3><img src=@img3 alt='Banner Image' /></a></div></td>"
+    ];
     //console.log('banner template: ', getTemplate);
-    return setTemplatesBanner(getTemplate);
+    //return setTemplatesBanner(getTemplate);
+    return getTemplate;
   }
 
   const handleAddDepartment = () => {

@@ -101,18 +101,6 @@
       "departmentname": "Supports",
       "banners": [
         {
-          "bannerid": 2,
-          "type": 1,
-          "name": "Supp 2",
-          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=https://www.acommerce.asia><img src=./images/temp-banner-1column-lb.jpg alt='Banner Image' /></a></div></td>",
-          "images": [
-            "./images/temp-banner-1column-lb.jpg"
-          ],
-          "links": [
-            "https://www.acommerce.asia"
-          ]
-        },
-        {
           "bannerid": 3,
           "type": 2,
           "name": "Supp 3",
@@ -123,6 +111,18 @@
           ],
           "links": [
             "https://www.acommerce.asia",
+            "https://www.acommerce.asia"
+          ]
+        },
+        {
+          "bannerid": 4,
+          "type": 1,
+          "name": "supports 1",
+          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=https://www.acommerce.asia><img src=./images/temp-banner-1column-b.jpg alt='Banner Image' /></a></div></td>",
+          "images": [
+            "./images/temp-banner-1column-b.jpg"
+          ],
+          "links": [
             "https://www.acommerce.asia"
           ]
         }
@@ -174,8 +174,17 @@
     }
   ],
   "templates": [
-    "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td>",
-    "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link2><img src=@img2 alt='Banner Image' /></a></div></td>",
-    "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link2><img src=@img2 alt='Banner Image' /></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link3><img src=@img3 alt='Banner Image' /></a></div></td>"
+    {
+      "id": "1",
+      "template": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td>"
+    },
+    {
+      "id": "2",
+      "template": "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link2><img src=@img2 alt='Banner Image' /></a></div></td>"
+    },
+    {
+      "id": "3",
+      "template": "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link2><img src=@img2 alt='Banner Image' /></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link3><img src=@img3 alt='Banner Image' /></a></div></td>"
+    }
   ]
 }
