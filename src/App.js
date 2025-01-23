@@ -330,7 +330,7 @@ function App() {
   return (
     <Box className="split form-container" sx={{ maxWidth: '1000px', margin: '0 auto', padding: 2 }}>
       <Typography variant="h4" gutterBottom>
-        Email Signature Management
+        Email Signature Data Management
       </Typography>
       {/* <Box className="container" spacing={2} sx={{width: '100%', maxWidth: '936px', padding: '0 20px'}}>
         <Typography variant="h6" gutterBottom>
