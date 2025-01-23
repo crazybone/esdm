@@ -332,7 +332,7 @@ function App() {
       <Typography variant="h4" gutterBottom>
         Email Signature Management
       </Typography>
-      <Box className="container" spacing={2} sx={{width: '100%', maxWidth: '936px', padding: '0 20px'}}>
+      {/* <Box className="container" spacing={2} sx={{width: '100%', maxWidth: '936px', padding: '0 20px'}}>
         <Typography variant="h6" gutterBottom>
           Countries
         </Typography>
@@ -351,7 +351,7 @@ function App() {
             />
           </AccordionDetails>
         </Accordion>
-      </Box>
+      </Box> */}
       <Box className="container" spacing={2} sx={{width: '100%', maxWidth: '936px', padding: '0 20px'}}>
         <Typography variant="h6" gutterBottom sx={{ padding: '20px 0'}}>
           Banners
