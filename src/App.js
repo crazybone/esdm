@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// import FileUploader from './components/FileUploader';
 import {
   Accordion,
   AccordionSummary,
@@ -13,83 +14,125 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  IconButton,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
-import { readFile, saveFile } from './utils/fileUtils';
+import AddIcon from '@mui/icons-material/AddCircleSharp';
+import DeleteIcon from '@mui/icons-material/Delete';
 import './styles.css';
 
 function App() {
-  const [data, setData] = useState({ departments: [] });
+  const [data, setData] = useState({ departments: [] });  
   const [newDeptName, setNewDeptName] = useState('');
-  const [newSectionName, setNewSectionName] = useState('');
-  const [bannerImages, setBannerImages] = useState(['']);
-  const [bannerLinks, setBannerLinks] = useState(['']);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentBanner, setCurrentBanner] = useState(null);
   const [currentBannerDeptId, setCurrentBannerDeptId] = useState(null);
   const [currentBannerSectionId, setCurrentBannerSectionId] = useState(null);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const [addSectDialogOpen, setAddSectDialogOpen] = useState(false);
+  const [newBannerDetails, setNewBannerDetails] = useState({
+    type: 1,
+    name: '',
+    images: [''],
+    links: [''],
+    content: ''
+  });
+  const [departmentsField, setDepartmentsField] = useState([]);
+  const [templatesBanner, setTemplatesBanner] = useState([]);
+
+  const getData=()=>{
+    fetch('db.json',
+    {
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }
+    )
+      .then(function(response){
+        //console.log(response)
+        return response.json();
+      })
+      .then(function(myJson) {
+        //console.log(myJson);
+        setData(myJson)
+      });
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const jsonData = await readFile('data.json');
-      setData((prevData) => {
-        const updatedDepartments = jsonData.departments.map((dept) => ({
-          ...dept,
-          sections: dept.sections.map((section) => ({
-            ...section,
-            selectedBannerType: section.banner.length > 0 ? section.banner[0].type : null,
-            displayedContent: section.banner.length > 0 ? section.banner[0].content : '',
-          })),
-        }));
-        return { departments: updatedDepartments };
-      });
-    }
-    fetchData();
+    getData();
+    handleGetTemplates();
   }, []);
 
+  const handleGetTemplates = () => {    
+    const getTemplate = data.templates
+    //console.log('banner template: ', getTemplate);
+    return setTemplatesBanner(getTemplate);
+  }
+
   const handleAddDepartment = () => {
-    const newId = data.departments.length > 0 ? data.departments[data.departments.length - 1].id + 1 : 1;
+    const deptLength = data.departments.length;
+    const newId = (deptLength + 1).toString();
+    //const newId = data.departments.length > 0 ? data.departments[data.departments.length - 1].id + 1 : 1;
     setData((prevData) => ({
-      departments: [...prevData.departments, { id: newId, name: newDeptName, sections: [] }],
+      departments: [...prevData.departments, { id: newId, departmentname: newDeptName, banners: [] }],
     }));
+    handleSaveNewDepartment({ id: newId, departmentname: newDeptName, banners: [] });
     setNewDeptName('');
-  };
+  };  
 
   const handleAddSection = (deptId) => {
     setData((prevData) => {
-      const updatedDepartments = prevData.departments.map((dept) => {
+      const updatedDepartments = prevData.departments.map((dept) => {        
         if (dept.id === deptId) {
-          const newSectionId = dept.sections.length > 0 ? dept.sections[dept.sections.length - 1].id + 1 : 1;
+          const bannerCount = dept.banners.length;
+          const lastBannerItem = dept.banners[bannerCount - 1].bannerid;
+          console.log('handleAddSection > lastBannerItem : ', lastBannerItem);
           return {
             ...dept,
-            sections: [...dept.sections, { id: newSectionId, name: newSectionName, banner: [], selectedBannerType: 1, displayedContent: '' }],
+            banners: [
+              ...dept.banners,
+              {
+                bannerid: (lastBannerItem + 1),
+                type: newBannerDetails.type,
+                name: newBannerDetails.name,
+                content: bannerFactory(newBannerDetails),
+                images: newBannerDetails.images,
+                links: newBannerDetails.links,
+              },
+            ],
           };
-        }
+        }       
         return dept;
       });
+      handleSaveNewBanner(updatedDepartments[deptId - 1], deptId); //
       return { departments: updatedDepartments };
     });
-    setNewSectionName('');
+    //setNewBannerName('');
+    setNewBannerDetails({ type: 1, name: '', images: [''], links: [''] });
+    setAddSectDialogOpen(false);
   };
-
   const handleAddBanner = (deptId, sectionId) => {
     setData((prevData) => {
       const updatedDepartments = prevData.departments.map((dept) => {
         if (dept.id === deptId) {
           return {
             ...dept,
-            sections: dept.sections.map((section) => {
-              if (section.id === sectionId && section.banner.length < 3) {
-                const newBannerId = section.banner.length > 0 ? section.banner[section.banner.length - 1].bannerid + 1 : 1;
+            banners: dept.banners.map((banner) => {
+              console.log('banner.id: ', banner.id, 'sectionId: ', sectionId);
+              if (banner.id === sectionId && banner.length < 3) {
+                const newBannerId = banner.length > 0 ? banner[banner.length - 1].bannerid + 1 : 1;
                 return {
-                  ...section,
-                  banner: [...section.banner, { bannerid: newBannerId, type: section.selectedBannerType, content: section.displayedContent }],
+                  ...banner,
+                  //banner: [...banner, { bannerid: newBannerId, type: banner.selectedBannerType, content: banner.displayedContent }],
+                  banner: [...banner, { bannerid: newBannerId, type: banner.selectedBannerType, content: '', images: [''], links: [''] }],
                 };
               }
-              return section;
+              return banner;
             }),
           };
         }
@@ -97,71 +140,76 @@ function App() {
       });
       return { departments: updatedDepartments };
     });
-    setBannerImages(['']);
-    setBannerLinks(['']);
+    // setBannerImages(['']);
+    // setBannerLinks(['']);
   };
 
-  const handleBannerTypeChange = (deptId, sectionId, newBannerType) => {
+  const handleToggleDisable = (deptId) => {
     setData((prevData) => {
       const updatedDepartments = prevData.departments.map((dept) => {
         if (dept.id === deptId) {
           return {
             ...dept,
-            sections: dept.sections.map((section) => {
-              if (section.id === sectionId) {
-                const selectedBanner = section.banner.find((b) => b.type === newBannerType);
-                return {
-                  ...section,
-                  selectedBannerType: newBannerType,
-                  displayedContent: selectedBanner ? selectedBanner.content : '',
-                };
-              }
-              return section;
-            }),
+            disabled: !isDisabled,
           };
         }
+        document.getElementById('department_'+dept.id).attr(':disabled');
         return dept;
       });
       return { departments: updatedDepartments };
     });
   };
+  
+  const bannerFactory = (bannerDetail) => {
+    let bannertemplate = templatesBanner[bannerDetail.type - 1];
+    let bannerContent = '';
+    let len = bannerDetail.images.length;
+    let i;
 
-  const handleSaveData = async () => {
-    await saveFile('data.json', data);
-  };
-
-  const handleToggleDisable = () => {
-    setIsDisabled(!isDisabled);
+    for(i=0; i < len; i++) {  
+      let tx = '@img'+(i+1);
+      let lx = '@link'+(i+1);
+      bannertemplate = bannertemplate.replace(tx, bannerDetail.images[i]);
+      bannertemplate = bannertemplate.replace(lx, bannerDetail.links[i]);
+    }
+    bannerContent = bannertemplate;
+    //console.log('bannerFactory > bannerContent: ', bannerContent);
+    return bannerContent;
   };
 
   const handleOpenEditBanner = (deptId, sectionId, banner) => {
     setCurrentBannerDeptId(deptId);
     setCurrentBannerSectionId(sectionId);
     setCurrentBanner(banner);
-    setIsDialogOpen(true);
+    setIsDialogOpen(true);//edit    
+    //console.log('edit banner: ', banner.content);
   };
 
-  const handleSaveBanner = () => {
-    if (!currentBanner || currentBannerDeptId === null || currentBannerSectionId === null) return;
+  const handleOpenAddSection = (deptId) => {
+    setCurrentBannerDeptId(deptId);
+    setAddSectDialogOpen(true);//Add section
+  };
 
+  const handleEditBanner = () => {
+    if (!currentBanner || currentBannerDeptId === null || currentBannerSectionId === null) return; 
+    const updatedBanner = { ...currentBanner, content: bannerFactory(currentBanner) };
     setData((prevData) => {
       const updatedDepartments = prevData.departments.map((dept) => {
         if (dept.id === currentBannerDeptId) {
           return {
             ...dept,
-            sections: dept.sections.map((section) => {
-              if (section.id === currentBannerSectionId) {
-                return {
-                  ...section,
-                  banner: section.banner.map((b) => (b.bannerid === currentBanner.bannerid ? currentBanner : b)),
-                };
+            banners: dept.banners.map((banner) => {
+              if (banner.bannerid === currentBannerSectionId) {
+                return updatedBanner;
               }
-              return section;
+              return banner;
             }),
           };
         }
         return dept;
       });
+
+      handleSaveEditBanner(updatedBanner, currentBannerDeptId, currentBannerSectionId);
       return { departments: updatedDepartments };
     });
 
@@ -171,151 +219,316 @@ function App() {
     setCurrentBannerSectionId(null);
   };
 
+  const handleDeleteBanner = async (deptId, sectionId) => {
+    setData((prevData) => {
+      const updatedDepartments = prevData.departments.map((dept) => {
+        if (dept.id === deptId) {
+          return {
+            ...dept,
+            banners: dept.banners.filter((banner) => banner.bannerid !== sectionId),
+          };
+        }
+        return dept;
+      });
+      return { departments: updatedDepartments };
+    });
+
+    try {
+      const response = await fetch(`http://localhost:3005/departments/${deptId}`);
+      if (!response.ok) throw new Error("Failed to fetch department data.");
+      const department = await response.json();
+      const updatedBanners = department.banners.filter(banner => banner.bannerid !== sectionId);
+
+      await fetch(`http://localhost:3005/departments/${deptId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ banners: updatedBanners }),
+      });
+
+      console.log(`Banner with ID ${sectionId} deleted successfully!`);
+    } catch (error) {
+      console.error("Error deleting banner:", error);
+    }
+  };
+
+  const handleSaveEditBanner = async (newbanner, deptid, bannerId) => {
+    try {
+      const response = await fetch(`http://localhost:3005/departments/${deptid}`);
+      if (!response.ok) throw new Error("Failed to fetch department data.");
+      const department = await response.json();
+      const updatedBanners = department.banners.map(banner =>
+        banner.bannerid === bannerId
+          ? { ...banner, ...newbanner } 
+          : banner
+      );
+  
+      await fetch(`http://localhost:3005/departments/${deptid}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ banners: updatedBanners }),
+      });
+  
+      console.log(`Banner with ID ${bannerId} updated successfully!`);
+    } catch (error) {
+      console.error("Error editing banner:", error);
+    }
+  };
+
+  const handleSaveNewBanner = async (newData, deptId) => {
+    const pointer = 'http://localhost:3005/departments/' + (deptId);
+    try {
+      const response = await fetch(pointer, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log('Data saved successfully:', result);
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+  };
+
+  const handleSaveNewDepartment = async (newDeptName) => {
+    try {
+      const response = await fetch('http://localhost:3005/departments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newDeptName),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log('Data saved successfully:', result);
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+  };
+
+
   return (
-    <Box sx={{ maxWidth: '1000px', margin: '0 auto', padding: 2 }}>
+    <Box className="split form-container" sx={{ maxWidth: '1000px', margin: '0 auto', padding: 2 }}>
       <Typography variant="h4" gutterBottom>
-        Department Management
+        Email Signature Management
       </Typography>
-      {data.departments.map((dept) => (
-        <Accordion key={dept.id} sx={{ marginTop: 2 }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <TextField id={dept.name} disabled={!isDisabled} label="Department" sx={{ border: 0 }} defaultValue={dept.name} />
-            <IconButton aria-label="edit" size="large" onClick={handleToggleDisable}><EditIcon /></IconButton>
+      <Box className="container" spacing={2} sx={{width: '100%', maxWidth: '936px', padding: '0 20px'}}>
+        <Typography variant="h6" gutterBottom>
+          Countries
+        </Typography>
+        <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Add New Department</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {dept.sections.map((section) => (
-              <Accordion key={section.id} sx={{ marginTop: 2 }}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <TextField key={section.name} disabled={!isDisabled} label="Section" sx={{ border: 0 }} defaultValue={section.name} />
-                  <IconButton aria-label="edit" size="large" onClick={handleToggleDisable}><EditIcon /></IconButton>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Select
-                    id={`bannerSection_${section.id}`}
-                    value={section.selectedBannerType || ''}
-                    onChange={(event) => handleBannerTypeChange(dept.id, section.id, event.target.value)}
-                    fullWidth
-                  >
-                    {[1, 2, 3].map((type) => (
-                      <MenuItem key={type} value={type}>{`${type} Column`}</MenuItem>
-                    ))}
-                  </Select>
-
-                  {section.displayedContent && (
-                    <Box id={`bannerPreview_${section.id}`} container spacing={2} sx={{ marginTop: 2 }}>
-                      <Typography>{section.banner.find((b) => b.type === section.selectedBannerType)?.name || 'No Banner Selected'}</Typography>
-                      <Box
-                        dangerouslySetInnerHTML={{ __html: section.displayedContent }}
-                        sx={{ marginTop: 2, maxWidth: '640px', height: '100px', display: 'inline-flex', justifyContent: 'space-between' }}
-                      />
-                    </Box>
-                  )}
-
-                  <Button
-                    sx={{ marginTop: 2 }}
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleOpenEditBanner(dept.id, section.id, section.banner.find((b) => b.type === section.selectedBannerType))}
-                  >
-                    Edit Banner
-                  </Button>
-                </AccordionDetails>
-              </Accordion>
-            ))}
-
-            <Accordion sx={{ marginTop: 2 }}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>Add New Section</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <TextField
-                  label="New Section Name"
-                  variant="outlined"
-                  value={newSectionName}
-                  onChange={(e) => setNewSectionName(e.target.value)}
-                  sx={{ marginTop: 2, width: '30%' }}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleAddSection(dept.id)}
-                  sx={{ marginTop: 2, marginLeft: 2, padding: 2 }}
-                >
-                  Add
-                </Button>
-              </AccordionDetails>
-            </Accordion>
+            <TextField
+              label="Country Name"
+              variant="outlined"
+              sx={{fontSize: '2.2rem'}}
+              fullWidth
+              value={newDeptName}
+              //onChange={(e) => setNewDeptName(e.target.value)}
+            />
           </AccordionDetails>
         </Accordion>
-      ))}
+      </Box>
+      <Box className="container" spacing={2} sx={{width: '100%', maxWidth: '936px', padding: '0 20px'}}>
+        <Typography variant="h6" gutterBottom sx={{ padding: '20px 0'}}>
+          Banners
+        </Typography>
+        {data.departments.map((dept) => (        
+          <Accordion key={dept.id} sx={{ marginTop: 2 }}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>          
+              <TextField disabled={!isDisabled} id={`department_${dept.id}`} label={`department ${dept.id}`} sx={{ border: 0 }} defaultValue={dept.departmentname} />
+              {/* <IconButton aria-label="edit" size="large"  sx={{ width: '40px', height: '40px' }} 
+              onClick={() => handleToggleDisable(dept.id)}>
+                <EditIcon sx={{ width: '20px', height: '20px' }} />
+              </IconButton> */}
+            </AccordionSummary>
+            <AccordionDetails>
+              {dept.banners.map((banner) => (
+                <Accordion key={banner.bannerid} sx={{ marginTop: 2 }}>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>                 
+                    <Typography variant="button" >{banner.name}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{margin: '0', padding: '5px'}}>
+                    <Box className="container" spacing={2} sx={{width: '100%', maxWidth: '936px', padding: '0 20px'}}>
+                        <Box key={banner.name} sx={{marginBottom: 2, maxWidth: '94%', border: '1px solid #ddd', padding: 2 }}>
+                          <Box
+                            dangerouslySetInnerHTML={{ __html: banner.content }}
+                            sx={{ marginTop: 2, maxWidth: '640px', height: '100px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+                          />
+                        
+                          <IconButton color="primary" aria-label="edit" onClick={() => handleOpenEditBanner(dept.id, banner.bannerid, banner)}><EditIcon /></IconButton>
+                          <IconButton color="primary" aria-label="delete" onClick={() => handleDeleteBanner(dept.id, banner.bannerid)}><DeleteIcon /></IconButton>                       
+                        
+                        </Box>
+                        <Dialog open={isDeleteDialogOpen} onClose={() => setIsDeleteDialogOpen(false)}>
+                            <DialogTitle>Confirm Delete</DialogTitle>
+                            <DialogContent>
+                              <Typography>Are you sure you want to delete this banner?</Typography>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button onClick={() => setIsDeleteDialogOpen(false)}>Cancel</Button>
+                              <Button onClick={() => handleDeleteBanner(dept.id, banner.bannerid)} color="primary" variant="contained">Delete</Button>
+                            </DialogActions>
+                          </Dialog>
+                        {/* <div>
+                          <FileUploader />
+                        </div> */}
+                    </Box>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+              {dept.id > "1" &&            
+              <IconButton color="primary" aria-label="edit" onClick={() => handleOpenAddSection(dept.id)}><AddIcon /></IconButton>
+              }
+            </AccordionDetails>
+          </Accordion>
+        ))}
 
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Add New Department</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <TextField
-            label="Department Name"
-            variant="outlined"
-            fullWidth
-            value={newDeptName}
-            onChange={(e) => setNewDeptName(e.target.value)}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddDepartment}
-            sx={{ marginTop: 2 }}
-          >
-            Add Department
-          </Button>
-        </AccordionDetails>
-      </Accordion>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Add New Department</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TextField
+              label="Department Name"
+              variant="outlined"
+              sx={{fontSize: '2.2rem'}}
+              fullWidth
+              value={newDeptName}
+              onChange={(e) => setNewDeptName(e.target.value)}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddDepartment}
+              sx={{ marginTop: 2 }}
+            >Add Department</Button>
+          </AccordionDetails>
+        </Accordion>      
 
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={handleSaveData}
-        sx={{ marginTop: 4 }}
-      >
-        Save Data
-      </Button>
+        {/* Edit Banner Dialog */}      
+        <Dialog maxWidth="sm" open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+          <DialogTitle>Edit Banner</DialogTitle>
+          <DialogContent>
+            {currentBanner && (
+              <>
+                <TextField
+                  label="Banner Name"
+                  fullWidth
+                  margin="normal"
+                  value={currentBanner.name}
+                  onChange={(e) => setCurrentBanner({ ...currentBanner, name: e.target.value })}
+                />
+                <Box key={currentBanner.bannerid} sx={{ display: 'flex', gap: 2, marginBottom: 2 }} >  
+                  <Box sx={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2, marginBottom: 2 }}>       
+                    {currentBanner.images.map((image, index) => (
+                      <TextField
+                        key={`image-${index}`}
+                        label={`Image Column ${index + 1}`}
+                        margin="normal"
+                        value={image}
+                        onChange={(e) => {
+                          const newImages = [...currentBanner.images];
+                          newImages[index] = e.target.value;
+                          setCurrentBanner({ ...currentBanner, images: newImages });
+                        }}
+                      />
+                    ))}
+                  </Box>
+                  <Box sx={{ width: '50%',display: 'flex', flexDirection: 'column', gap: 2, marginBottom: 2 }}>
+                    {currentBanner.links.map((link, index) => (
+                      <TextField
+                        key={`link-${index}`}
+                        label={`Link Column ${index + 1}`}
+                        margin="normal"
+                        value={link}
+                        onChange={(e) => {
+                          const newLinks = [...currentBanner.links];
+                          newLinks[index] = e.target.value;
+                          setCurrentBanner({ ...currentBanner, links: newLinks });
+                        }}
+                      />
+                    ))}
+                  </Box>
+                </Box>
+              </>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setIsDialogOpen(false)}>Cancel</Button>
+            <Button onClick={handleEditBanner} color="primary" variant="contained">Update Banner</Button>
+          </DialogActions>
+        </Dialog>
 
-      {/* Edit Banner Dialog */}
-      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-        <DialogTitle>Edit Banner</DialogTitle>
-        <DialogContent>
-          {currentBanner && (
-            <>
-              <TextField
-                label="Banner Name"
-                fullWidth
-                margin="normal"
-                value={currentBanner.name}
-                onChange={(e) => setCurrentBanner({ ...currentBanner, name: e.target.value })}
-              />
-              <TextField
-                label="Banner Image URL"
-                fullWidth
-                margin="normal"
-                value={currentBanner.content}
-                onChange={(e) => setCurrentBanner({ ...currentBanner, content: e.target.value })}
-              />
-              <TextField
-                label="Banner URL"
-                fullWidth
-                margin="normal"
-                value={currentBanner.url || ''}
-                onChange={(e) => setCurrentBanner({ ...currentBanner, url: e.target.value })}
-              />
-            </>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setIsDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleSaveBanner} color="primary" variant="contained">Save</Button>
-        </DialogActions>
-      </Dialog>
+        {/* Add New Banner Dialog */}
+        <Dialog open={addSectDialogOpen} onClose={() => setAddSectDialogOpen(false)}>
+          <DialogTitle>Add New Banner</DialogTitle>
+          <DialogContent>
+            <TextField
+              label="Banner Name"
+              fullWidth
+              margin="normal"
+              value={newBannerDetails.name}
+              onChange={(e) => setNewBannerDetails({ ...newBannerDetails, name: e.target.value })}
+            />
+            <Select
+              label="Column Type"
+              fullWidth
+              value={newBannerDetails.type}
+              onChange={(e) => setNewBannerDetails({ ...newBannerDetails, type: e.target.value })}
+              sx={{ marginBottom: 2 }}
+            >
+              {[1, 2, 3].map((type) => (
+                <MenuItem key={type} value={type}>{`${type} Column`}</MenuItem>
+              ))}
+            </Select>
+            {Array.from({ length: newBannerDetails.type }).map((_, index) => (
+              <Box key={index} sx={{ display: 'flex', gap: 2, marginBottom: 2 }}>
+                <TextField
+                  label={`Image URL ${index + 1}`}
+                  value={newBannerDetails.images[index] || ''}
+                  onChange={(e) => {
+                    const newImages = [...newBannerDetails.images];
+                    newImages[index] = e.target.value;
+                    setNewBannerDetails((prev) => ({ ...prev, images: newImages }));
+                  }}
+                />
+                <TextField
+                  label={`Link URL ${index + 1}`}
+                  value={newBannerDetails.links[index] || ''}
+                  onChange={(e) => {
+                    const newLinks = [...newBannerDetails.links];
+                    newLinks[index] = e.target.value;
+                    setNewBannerDetails((prev) => ({ ...prev, links: newLinks }));
+                  }}
+                />
+              </Box>
+            ))}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setAddSectDialogOpen(false)}>Cancel</Button>
+            <Button onClick={() => handleAddSection(currentBannerDeptId)} color="primary" variant="contained">Add this Banner</Button>
+          </DialogActions>
+        </Dialog>
+      </Box>    
     </Box>
   );
 }
