@@ -8,9 +8,9 @@
           "bannerid": 1,
           "type": 1,
           "name": "aCommerce Default",
-          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/'><img src='./images/acomm-standard-banner.jpg' width='100%' alt=''/></a></div></td>",
+          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/'><img src='https://crazybone.github.io/esdm/images/acomm-standard-banner.jpg' width='100%' alt=''/></a></div></td>",
           "images": [
-            "./images/acomm-standard-banner.jpg"
+            "https://crazybone.github.io/esdm/images/acomm-standard-banner.jpg"
           ],
           "links": [
             "https://www.acommerce.asia/"
@@ -26,9 +26,9 @@
           "bannerid": 1,
           "type": 1,
           "name": "Social Media Ad 1column",
-          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='./images/temp-banner-1column-b.jpg' width='100%' height='96' alt=''/></a></div></td>",
+          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='https://crazybone.github.io/esdm/images/temp-banner-1column-b.jpg' width='100%' height='96' alt=''/></a></div></td>",
           "images": [
-            "./images/temp-banner-1column-b.jpg"
+            "https://crazybone.github.io/esdm/images/temp-banner-1column-b.jpg"
           ],
           "links": [
             "https://www.acommerce.asia/managed-services/online-store-development/"
@@ -38,10 +38,10 @@
           "bannerid": 2,
           "type": 2,
           "name": "Social Media Ad 2columns",
-          "content": "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;margin-right:10px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-b.jpg' width='100%' height='96' alt=''/></a></div></td>",
+          "content": "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;margin-right:10px;'><a href='https://www.acommerce.asia'><img src='https://crazybone.github.io/esdm/images/temp-banner-2columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;'><a href='https://www.acommerce.asia'><img src='https://crazybone.github.io/esdm/images/temp-banner-2columns-b.jpg' width='100%' height='96' alt=''/></a></div></td>",
           "images": [
-            "./images/temp-banner-2columns-g.jpg",
-            "./images/temp-banner-2columns-b.jpg"
+            "https://crazybone.github.io/esdm/images/temp-banner-2columns-g.jpg",
+            "https://crazybone.github.io/esdm/images/temp-banner-2columns-b.jpg"
           ],
           "links": [
             "https://www.acommerce.asia",
@@ -52,11 +52,11 @@
           "bannerid": 3,
           "type": 3,
           "name": "Social Media Ad 3columns",
-          "content": "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-b.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-lb.jpg' width='100%' height='96' alt=''/></a></div></td>",
+          "content": "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='https://crazybone.github.io/esdm/images/temp-banner-3columns-b.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='https://crazybone.github.io/esdm/images/temp-banner-3columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='https://crazybone.github.io/esdm/images/temp-banner-3columns-lb.jpg' width='100%' height='96' alt=''/></a></div></td>",
           "images": [
-            "./images/temp-banner-3columns-b.jpg",
-            "./images/temp-banner-3columns-g.jpg",
-            "./images/temp-banner-3columns-lb.jpg"
+            "https://crazybone.github.io/esdm/images/temp-banner-3columns-b.jpg",
+            "https://crazybone.github.io/esdm/images/temp-banner-3columns-g.jpg",
+            "https://crazybone.github.io/esdm/images/temp-banner-3columns-lb.jpg"
           ],
           "links": [
             "https://www.acommerce.asia",
@@ -74,9 +74,9 @@
           "bannerid": 1,
           "type": 1,
           "name": "Discount offer",
-          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='./images/temp-banner-1column-g.jpg' width='100%' height='96' alt=''/></a></div></td>",
+          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='https://crazybone.github.io/esdm/images/temp-banner-1column-g.jpg' width='100%' height='96' alt=''/></a></div></td>",
           "images": [
-            "./images/temp-banner-1column-g.jpg"
+            "https://crazybone.github.io/esdm/images/temp-banner-1column-g.jpg"
           ],
           "links": [
             "https://www.acommerce.asia/managed-services/online-store-development/"
@@ -86,9 +86,9 @@
           "bannerid": 2,
           "type": 1,
           "name": "Product Launch Banner 1 Column",
-          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='./images/temp-banner-1column-lb.jpg' width='100%' height='96' alt=''/></a></div></td>",
+          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='https://crazybone.github.io/esdm/images/temp-banner-1column-lb.jpg' width='100%' height='96' alt=''/></a></div></td>",
           "images": [
-            "./images/temp-banner-1column-lb.jpg"
+            "https://crazybone.github.io/esdm/images/temp-banner-1column-lb.jpg"
           ],
           "links": [
             "https://www.acommerce.asia/managed-services/online-store-development/"
@@ -104,10 +104,10 @@
           "bannerid": 3,
           "type": 2,
           "name": "Supp 3",
-          "content": "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=https://www.acommerce.asia><img src=./images/temp-banner-2columns-g.jpg alt='Banner Image' /></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=https://www.acommerce.asia><img src=./images/temp-banner-2columns-b.jpg alt='Banner Image' /></a></div></td>",
+          "content": "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=https://www.acommerce.asia><img src=https://crazybone.github.io/esdm/images/temp-banner-2columns-g.jpg alt='Banner Image' /></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=https://www.acommerce.asia><img src=https://crazybone.github.io/esdm/images/temp-banner-2columns-b.jpg alt='Banner Image' /></a></div></td>",
           "images": [
-            "./images/temp-banner-2columns-g.jpg",
-            "./images/temp-banner-2columns-b.jpg"
+            "https://crazybone.github.io/esdm/images/temp-banner-2columns-g.jpg",
+            "https://crazybone.github.io/esdm/images/temp-banner-2columns-b.jpg"
           ],
           "links": [
             "https://www.acommerce.asia",
@@ -118,9 +118,9 @@
           "bannerid": 4,
           "type": 1,
           "name": "supports 1",
-          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=https://www.acommerce.asia><img src=./images/temp-banner-1column-b.jpg alt='Banner Image' /></a></div></td>",
+          "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=https://www.acommerce.asia><img src=https://crazybone.github.io/esdm/images/temp-banner-1column-b.jpg alt='Banner Image' /></a></div></td>",
           "images": [
-            "./images/temp-banner-1column-b.jpg"
+            "https://crazybone.github.io/esdm/images/temp-banner-1column-b.jpg"
           ],
           "links": [
             "https://www.acommerce.asia"
