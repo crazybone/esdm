@@ -1,0 +1,244 @@
+{
+  "departments": [
+    {
+      "id": "1",
+      "name": "Any Department",
+      "sections": [
+        {
+          "id": 1,
+          "name": "aCommerce Banner",
+          "banner": [
+            {
+              "bannerid": 1,
+              "type": 1,
+              "name": "aCommerce Default",
+              "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/'><img src='./images/acomm-standard-banner.jpg' width='100%' alt=''/></a></div></td>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Marketing",
+      "sections": [
+        {
+          "id": 1,
+          "name": "Social Media Ad",
+          "banner": [
+            {
+              "bannerid": 1,
+              "type": 1,
+              "name": "Social Media Ad 1column",
+              "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='./images/acomm-standard-banner.jpg' width='100%' height='96' alt=''/></a></div></td>"
+            },
+            {
+              "bannerid": 2,
+              "type": 2,
+              "name": "Social Media Ad 2columns",
+              "content": "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;margin-right:10px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-b.jpg' width='100%' height='96' alt=''/></a></div></td>"
+            },
+            {
+              "bannerid": 3,
+              "type": 3,
+              "name": "Social Media Ad 3columns",
+              "content": "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-b.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-lb.jpg' width='100%' height='96' alt=''/></a></div></td>"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Email Campaign",
+          "banner": [
+            {
+              "bannerid": 1,
+              "type": 1,
+              "name": "Email Campaign 1column",
+              "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='./images/acomm-standard-banner.jpg' width='100%' height='96' alt=''/></a></div></td>"
+            },
+            {
+              "bannerid": 2,
+              "type": 2,
+              "name": "Email Campaign 2columns",
+              "content": "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;margin-right:10px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-b.jpg' width='100%' height='96' alt=''/></a></div></td>"
+            },
+            {
+              "bannerid": 3,
+              "type": 3,
+              "name": "Email Campaign 3columns",
+              "content": "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-b.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-lb.jpg' width='100%' height='96' alt=''/></a></div></td>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "0": {
+        "id": 1,
+        "sectionname": "Any Department",
+        "banners": [
+          {
+            "bannerid": 1,
+            "type": 1,
+            "name": "aCommerce Default",
+            "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/'><img src='./images/acomm-standard-banner.jpg' width='100%' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          }
+        ]
+      },
+      "1": {
+        "id": 2,
+        "sectionname": "Marketing",
+        "banners": [
+          {
+            "bannerid": 1,
+            "type": 1,
+            "name": "Social Media Ad 1column",
+            "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='./images/acomm-standard-banner.jpg' width='100%' height='96' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          },
+          {
+            "bannerid": 2,
+            "type": 2,
+            "name": "Social Media Ad 2columns",
+            "content": "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;margin-right:10px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-b.jpg' width='100%' height='96' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          },
+          {
+            "bannerid": 3,
+            "type": 3,
+            "name": "Social Media Ad 3columns",
+            "content": "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-b.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-lb.jpg' width='100%' height='96' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          },
+          {
+            "bannerid": 1,
+            "type": 2,
+            "name": "SEO",
+            "content": [
+              {
+                "bannerid": 1,
+                "type": 2,
+                "content": "<a href=\"https://www.acommerce.asia\"><img src=\"./images/temp-banner-2columns-g.jpg\" alt=\"Banner Image 1\" /></a>"
+              },
+              {
+                "bannerid": 2,
+                "type": 2,
+                "content": "<a href=\"https://www.acommerce.asia\"><img src=\"./images/temp-banner-2columns-b.jpg\" alt=\"Banner Image 2\" /></a>"
+              }
+            ],
+            "selectedBannerType": 2,
+            "displayedContent": "<a href=\"https://www.acommerce.asia\"><img src=\"./images/temp-banner-2columns-g.jpg\" alt=\"Banner Image 1\" /></a><a href=\"https://www.acommerce.asia\"><img src=\"./images/temp-banner-2columns-b.jpg\" alt=\"Banner Image 2\" /></a>"
+          }
+        ]
+      },
+      "id": "2cf6"
+    },
+    {
+      "0": {
+        "id": 1,
+        "sectionname": "Any Department",
+        "banners": [
+          {
+            "bannerid": 1,
+            "type": 1,
+            "name": "aCommerce Default",
+            "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/'><img src='./images/acomm-standard-banner.jpg' width='100%' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          }
+        ]
+      },
+      "1": {
+        "id": 2,
+        "sectionname": "Marketing",
+        "banners": [
+          {
+            "bannerid": 1,
+            "type": 1,
+            "name": "Social Media Ad 1column",
+            "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='./images/acomm-standard-banner.jpg' width='100%' height='96' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          },
+          {
+            "bannerid": 2,
+            "type": 2,
+            "name": "Social Media Ad 2columns",
+            "content": "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;margin-right:10px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-b.jpg' width='100%' height='96' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          },
+          {
+            "bannerid": 3,
+            "type": 3,
+            "name": "Social Media Ad 3columns",
+            "content": "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-b.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-lb.jpg' width='100%' height='96' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          }
+        ]
+      },
+      "id": "5c96"
+    },
+    {
+      "0": {
+        "id": 1,
+        "sectionname": "Any Department",
+        "banners": [
+          {
+            "bannerid": 1,
+            "type": 1,
+            "name": "aCommerce Default",
+            "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/'><img src='./images/acomm-standard-banner.jpg' width='100%' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          }
+        ]
+      },
+      "1": {
+        "id": 2,
+        "sectionname": "Marketing",
+        "banners": [
+          {
+            "bannerid": 1,
+            "type": 1,
+            "name": "Social Media Ad 1column",
+            "content": "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href='https://www.acommerce.asia/managed-services/online-store-development/'><img src='./images/acomm-standard-banner.jpg' width='100%' height='96' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          },
+          {
+            "bannerid": 2,
+            "type": 2,
+            "name": "Social Media Ad 2columns",
+            "content": "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;margin-right:10px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:310px;height:100%;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-2columns-b.jpg' width='100%' height='96' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          },
+          {
+            "bannerid": 3,
+            "type": 3,
+            "name": "Social Media Ad 3columns",
+            "content": "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-b.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-g.jpg' width='100%' height='96' alt=''/></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:210px;height:100%;margin-right:5px;'><a href='https://www.acommerce.asia'><img src='./images/temp-banner-3columns-lb.jpg' width='100%' height='96' alt=''/></a></div></td>",
+            "selectedBannerType": null,
+            "displayedContent": ""
+          },
+          {
+            "bannerid": 4,
+            "type": 1,
+            "name": "seo",
+            "content": "<a href=\"https://www.acommerce.asia\"><img src=\"./images/temp-banner-2columns-b.jpg\" alt=\"Banner Image 1\" /></a>",
+            "selectedBannerType": 1,
+            "displayedContent": "<a href=\"https://www.acommerce.asia\"><img src=\"./images/temp-banner-2columns-b.jpg\" alt=\"Banner Image 1\" /></a>"
+          }
+        ]
+      },
+      "id": "9230"
+    }
+  ]
+}
