@@ -1,16 +1,19 @@
 {
-  "name": "my-app",
+  "name": "esdm",
   "version": "0.1.0",
-  "homepage": "https://crazybone.github.io/esdm",
+  "homepage": "/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@genkit-ai/googleai": "^0.9.12",
     "@mui/icons-material": "^6.3.0",
     "@mui/material": "^6.3.0",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
     "express": "^4.21.2",
+    "firebase": "^11.2.0",
+    "genkit": "^0.9.12",
     "multer": "^1.4.5-lts.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -21,6 +24,7 @@
     "redeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
+    "build-localhost": "PUBLIC_URL=/ react-scripts build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -33,7 +37,7 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      ">0.5%",
       "not dead",
       "not op_mini all"
     ],

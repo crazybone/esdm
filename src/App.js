@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import FileUploader from './components/FileUploader';
 import {
   Accordion,
   AccordionSummary,
@@ -30,9 +29,7 @@ function App() {
   const [currentBanner, setCurrentBanner] = useState(null);
   const [currentBannerDeptId, setCurrentBannerDeptId] = useState(null);
   const [currentBannerSectionId, setCurrentBannerSectionId] = useState(null);
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-
   const [addSectDialogOpen, setAddSectDialogOpen] = useState(false);
   const [newBannerDetails, setNewBannerDetails] = useState({
     type: 1,
@@ -41,43 +38,42 @@ function App() {
     links: [''],
     content: ''
   });
-  const [departmentsField, setDepartmentsField] = useState([]);
   const [templatesBanner, setTemplatesBanner] = useState(['']);
+  const [textFields, setTextFields] = useState({
+    textField: false,
+  });
 
-  const getData=()=>{
-    fetch('db.json',
-    {
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+  const fetchDepartments = async () => {
+    try {
+      const response = await fetch("https://dev-wyeth-3.pdoh-dev.acommercedev.com/departments");
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      const db = await response.json();
+      setData({ departments: db });
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
-    )
-      .then(function(response){
-        //console.log(response)
-        return response.json();
-      })
-      .then(function(myJson) {
-        //console.log(myJson);
-        setData(myJson)
-      });
-  }
+  };
+
+  const fetchTemplates = async () => {
+    try {
+      const response = await fetch("https://dev-wyeth-3.pdoh-dev.acommercedev.com/templates");
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const db = await response.json();
+      //console.log('db: ', db);
+      return db;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
-    getData();
-    setTemplatesBanner(handleGetTemplates);
+    fetchDepartments();
+    setTemplatesBanner(fetchTemplates());
   }, []);
-
-  const handleGetTemplates = () => {    
-    const getTemplate = [
-      "<td align='center' class='banner-1col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td>",
-      "<td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td><td align='center' class='banner-2col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link2><img src=@img2 alt='Banner Image' /></a></div></td>",
-      "<td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link1><img src=@img1 alt='Banner Image' /></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link2><img src=@img2 alt='Banner Image' /></a></div></td><td align='center' class='banner-3col'><div class='img-container' style='display:block;width:100%;max-width:640px;height:100%;'><a href=@link3><img src=@img3 alt='Banner Image' /></a></div></td>"
-    ];
-    //console.log('banner template: ', getTemplate);
-    //return setTemplatesBanner(getTemplate);
-    return getTemplate;
-  }
 
   const handleAddDepartment = () => {
     const deptLength = data.departments.length;
@@ -89,14 +85,13 @@ function App() {
     handleSaveNewDepartment({ id: newId, departmentname: newDeptName, banners: [] });
     setNewDeptName('');
   };  
-
+  
   const handleAddSection = (deptId) => {
     setData((prevData) => {
-      const updatedDepartments = prevData.departments.map((dept) => {        
+      const updatedDepartments = prevData.departments.map((dept) => {
         if (dept.id === deptId) {
           const bannerCount = dept.banners.length;
-          const lastBannerItem = dept.banners[bannerCount - 1].bannerid;
-          console.log('handleAddSection > lastBannerItem : ', lastBannerItem);
+          const lastBannerItem = bannerCount > 0 ? dept.banners[bannerCount - 1].bannerid + 1 : 1;
           return {
             ...dept,
             banners: [
@@ -111,44 +106,20 @@ function App() {
               },
             ],
           };
+          
         }       
         return dept;
       });
-      handleSaveNewBanner(updatedDepartments[deptId - 1], deptId); //
+      
+      console.log('handleAddSection > updatedDepartments: ', deptId);        
+      handleSaveNewBanner(updatedDepartments[deptId - 1], deptId);
       return { departments: updatedDepartments };
     });
     //setNewBannerName('');
     setNewBannerDetails({ type: 1, name: '', images: [''], links: [''] });
     setAddSectDialogOpen(false);
   };
-  const handleAddBanner = (deptId, sectionId) => {
-    setData((prevData) => {
-      const updatedDepartments = prevData.departments.map((dept) => {
-        if (dept.id === deptId) {
-          return {
-            ...dept,
-            banners: dept.banners.map((banner) => {
-              console.log('banner.id: ', banner.id, 'sectionId: ', sectionId);
-              if (banner.id === sectionId && banner.length < 3) {
-                const newBannerId = banner.length > 0 ? banner[banner.length - 1].bannerid + 1 : 1;
-                return {
-                  ...banner,
-                  //banner: [...banner, { bannerid: newBannerId, type: banner.selectedBannerType, content: banner.displayedContent }],
-                  banner: [...banner, { bannerid: newBannerId, type: banner.selectedBannerType, content: '', images: [''], links: [''] }],
-                };
-              }
-              return banner;
-            }),
-          };
-        }
-        return dept;
-      });
-      return { departments: updatedDepartments };
-    });
-    // setBannerImages(['']);
-    // setBannerLinks(['']);
-  };
-
+  
   const handleToggleDisable = (deptId) => {
     setData((prevData) => {
       const updatedDepartments = prevData.departments.map((dept) => {
@@ -158,7 +129,6 @@ function App() {
             disabled: !isDisabled,
           };
         }
-        document.getElementById('department_'+dept.id).attr(':disabled');
         return dept;
       });
       return { departments: updatedDepartments };
@@ -224,6 +194,29 @@ function App() {
     setCurrentBannerSectionId(null);
   };
 
+  const handleDeleteDepartment = async (deptId) => {
+    setData((prevData) => ({
+      departments: prevData.departments.filter((dept) => dept.id !== deptId),
+    }));
+
+    try {
+      const response = await fetch(`https://dev-wyeth-3.pdoh-dev.acommercedev.com/departments/${deptId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      console.log(`Department with ID ${deptId} deleted successfully!`);
+    } catch (error) {
+      console.error('Error deleting department:', error);
+    }
+  };
+
   const handleDeleteBanner = async (deptId, sectionId) => {
     setData((prevData) => {
       const updatedDepartments = prevData.departments.map((dept) => {
@@ -239,12 +232,11 @@ function App() {
     });
 
     try {
-      const response = await fetch(`http://localhost:3005/departments/${deptId}`);
+      const response = await fetch(`https://dev-wyeth-3.pdoh-dev.acommercedev.com/departments/${deptId}`);
       if (!response.ok) throw new Error("Failed to fetch department data.");
       const department = await response.json();
       const updatedBanners = department.banners.filter(banner => banner.bannerid !== sectionId);
-
-      await fetch(`http://localhost:3005/departments/${deptId}`, {
+      await fetch(`https://dev-wyeth-3.pdoh-dev.acommercedev.com/departments/${deptId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -260,7 +252,7 @@ function App() {
 
   const handleSaveEditBanner = async (newbanner, deptid, bannerId) => {
     try {
-      const response = await fetch(`http://localhost:3005/departments/${deptid}`);
+      const response = await fetch(`https://dev-wyeth-3.pdoh-dev.acommercedev.com/departments/${deptid}`);
       if (!response.ok) throw new Error("Failed to fetch department data.");
       const department = await response.json();
       const updatedBanners = department.banners.map(banner =>
@@ -269,7 +261,7 @@ function App() {
           : banner
       );
   
-      await fetch(`http://localhost:3005/departments/${deptid}`, {
+      await fetch(`https://dev-wyeth-3.pdoh-dev.acommercedev.com/departments/${deptid}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -284,7 +276,7 @@ function App() {
   };
 
   const handleSaveNewBanner = async (newData, deptId) => {
-    const pointer = 'http://localhost:3005/departments/' + (deptId);
+    const pointer = `https://dev-wyeth-3.pdoh-dev.acommercedev.com/departments/${deptId}`;
     try {
       const response = await fetch(pointer, {
         method: 'PATCH',
@@ -307,7 +299,7 @@ function App() {
 
   const handleSaveNewDepartment = async (newDeptName) => {
     try {
-      const response = await fetch('http://localhost:3005/departments', {
+      const response = await fetch('https://dev-wyeth-3.pdoh-dev.acommercedev.com/departments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -326,88 +318,72 @@ function App() {
     }
   };
 
-
   return (
     <Box className="split form-container" sx={{ maxWidth: '1000px', margin: '0 auto', padding: 2 }}>
       <Typography variant="h4" gutterBottom>
         Email Signature Data Management
       </Typography>
-      {/* <Box className="container" spacing={2} sx={{width: '100%', maxWidth: '936px', padding: '0 20px'}}>
-        <Typography variant="h6" gutterBottom>
-          Countries
-        </Typography>
-        <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Add New Department</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField
-              label="Country Name"
-              variant="outlined"
-              sx={{fontSize: '2.2rem'}}
-              fullWidth
-              value={newDeptName}
-              //onChange={(e) => setNewDeptName(e.target.value)}
-            />
-          </AccordionDetails>
-        </Accordion>
-      </Box> */}
       <Box className="container" spacing={2} sx={{width: '100%', maxWidth: '936px', padding: '0 20px'}}>
         <Typography variant="h6" gutterBottom sx={{ padding: '20px 0'}}>
           Banners
         </Typography>
-        {data.departments.map((dept) => (        
+        {data.departments.map((dept) => (
           <Accordion key={dept.id} sx={{ marginTop: 2 }}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>          
-              <TextField disabled={!isDisabled} id={`department_${dept.id}`} label={`department ${dept.id}`} sx={{ border: 0 }} defaultValue={dept.departmentname} />
-              {/* <IconButton aria-label="edit" size="large"  sx={{ width: '40px', height: '40px' }} 
-              onClick={() => handleToggleDisable(dept.id)}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <TextField
+                disabled={dept.disabled || false}
+                id={`deptname_${dept.id}`}
+                label={`Department ${dept.id}`}
+                sx={{ border: 0 }}
+                defaultValue={dept.departmentname}
+              />
+              {/* <IconButton
+                aria-label="edit"
+                size="large"
+                sx={{ width: '40px', height: '40px' }}
+                onClick={() => handleToggleDisable(`deptname_${dept.id}`)}
+              >
                 <EditIcon sx={{ width: '20px', height: '20px' }} />
               </IconButton> */}
             </AccordionSummary>
             <AccordionDetails>
               {dept.banners.map((banner) => (
                 <Accordion key={banner.bannerid} sx={{ marginTop: 2 }}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>                 
-                    <Typography variant="button" >{banner.name}</Typography>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography variant="button">{banner.name}</Typography>
                   </AccordionSummary>
                   <AccordionDetails sx={{margin: '0', padding: '5px'}}>
                     <Box className="container" spacing={2} sx={{width: '100%', maxWidth: '936px', padding: '0 20px'}}>
-                        <Box key={banner.name} sx={{marginBottom: 2, maxWidth: '94%', border: '1px solid #ddd', padding: 2 }}>
-                          <Box
-                            dangerouslySetInnerHTML={{ __html: banner.content }}
-                            sx={{ marginTop: 2, maxWidth: '640px', height: '100px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
-                          />
-                        
-                          <IconButton color="primary" aria-label="edit" onClick={() => handleOpenEditBanner(dept.id, banner.bannerid, banner)}><EditIcon /></IconButton>
-                          <IconButton color="primary" aria-label="delete" onClick={() => handleDeleteBanner(dept.id, banner.bannerid)}><DeleteIcon /></IconButton>                       
-                        
-                        </Box>
-                        <Dialog open={isDeleteDialogOpen} onClose={() => setIsDeleteDialogOpen(false)}>
-                            <DialogTitle>Confirm Delete</DialogTitle>
-                            <DialogContent>
-                              <Typography>Are you sure you want to delete this banner?</Typography>
-                            </DialogContent>
-                            <DialogActions>
-                              <Button onClick={() => setIsDeleteDialogOpen(false)}>Cancel</Button>
-                              <Button onClick={() => handleDeleteBanner(dept.id, banner.bannerid)} color="primary" variant="contained">Delete</Button>
-                            </DialogActions>
-                          </Dialog>
-                        {/* <div>
-                          <FileUploader />
-                        </div> */}
+                      <Box key={banner.name} sx={{marginBottom: 2, maxWidth: '94%', border: '1px solid #ddd', padding: 2 }}>
+                        <Box
+                          dangerouslySetInnerHTML={{ __html: banner.content }}
+                          sx={{ marginTop: 2, maxWidth: '640px', height: '100px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+                        />
+                        <IconButton color="primary" aria-label="edit" onClick={() => handleOpenEditBanner(dept.id, banner.bannerid, banner)}><EditIcon /></IconButton>
+                        <IconButton color="primary" aria-label="delete" onClick={() => handleDeleteBanner(dept.id, banner.bannerid)}><DeleteIcon /></IconButton>
+                      </Box>
+                      <Dialog open={isDeleteDialogOpen} onClose={() => setIsDeleteDialogOpen(false)}>
+                        <DialogTitle>Confirm Delete</DialogTitle>
+                        <DialogContent>
+                          <Typography>Are you sure you want to delete this banner?</Typography>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={() => setIsDeleteDialogOpen(false)}>Cancel</Button>
+                          <Button onClick={() => handleDeleteBanner(dept.id, banner.bannerid)} color="primary" variant="contained">Delete</Button>
+                        </DialogActions>
+                      </Dialog>
                     </Box>
                   </AccordionDetails>
                 </Accordion>
               ))}
-              {dept.id > "1" &&            
+              {dept.id > "1" &&
               <IconButton color="primary" aria-label="edit" onClick={() => handleOpenAddSection(dept.id)}><AddIcon /></IconButton>
               }
             </AccordionDetails>
           </Accordion>
         ))}
 
-        <Accordion>
+        <Accordion sx={{ marginTop: 2 }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>Add New Department</Typography>
           </AccordionSummary>
@@ -427,9 +403,9 @@ function App() {
               sx={{ marginTop: 2 }}
             >Add Department</Button>
           </AccordionDetails>
-        </Accordion>      
+        </Accordion>
 
-        {/* Edit Banner Dialog */}      
+        {/* Edit Banner Dialog */}
         <Dialog maxWidth="sm" open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
           <DialogTitle>Edit Banner</DialogTitle>
           <DialogContent>
@@ -442,8 +418,8 @@ function App() {
                   value={currentBanner.name}
                   onChange={(e) => setCurrentBanner({ ...currentBanner, name: e.target.value })}
                 />
-                <Box key={currentBanner.bannerid} sx={{ display: 'flex', gap: 2, marginBottom: 2 }} >  
-                  <Box sx={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2, marginBottom: 2 }}>       
+                <Box key={currentBanner.bannerid} sx={{ display: 'flex', gap: 2, marginBottom: 2 }}>
+                  <Box sx={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2, marginBottom: 2 }}>
                     {currentBanner.images.map((image, index) => (
                       <TextField
                         key={`image-${index}`}
@@ -533,9 +509,8 @@ function App() {
             <Button onClick={() => handleAddSection(currentBannerDeptId)} color="primary" variant="contained">Add this Banner</Button>
           </DialogActions>
         </Dialog>
-      </Box>    
+      </Box>
     </Box>
   );
 }
-
 export default App;
